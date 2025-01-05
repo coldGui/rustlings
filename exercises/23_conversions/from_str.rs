@@ -49,10 +49,13 @@ impl FromStr for Person {
         } else if a[0]=="" {
             Err(ParsePersonError::NoName)
         } else{
-            match a[1].parse::<u8>() {
-                Ok(ag) => Ok(Person { name: a[0].to_string(), age: ag }),
-                Err(err) => Err(ParseInt(err))
-            }
+            // match a[1].parse::<u8>() {
+            //     Ok(ag) => Ok(Person { name: a[0].to_string(), age: ag }),
+            //     Err(err) => Err(ParseInt(err))
+            // }
+            a[1].parse::<u8>()
+                .map(|age|Person{name:a[0].to_string(), age})
+                .map_err(ParsePersonError::ParseInt)
         }
 
     }
